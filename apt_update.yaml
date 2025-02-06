@@ -1,6 +1,14 @@
-- name: Update and upgrade apt packages
-  become: true
-  apt:
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: 86400 #One day
+- hosts: all
+  tasks:
+    - name: Disable UFW on hosts
+      ufw:
+        state: disabled # unloads firewall and disables firewall on boot.
+
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Enable UFW on hosts
+      ufw:
+        state: enabled # unloads firewall and disables firewall on boot.
